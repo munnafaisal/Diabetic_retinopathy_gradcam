@@ -1,24 +1,12 @@
 import numpy as np
-import base64
-import flask
-import io
-import requests
 from keras.backend import tensorflow_backend as K
 from keras.applications.vgg16 import VGG16, preprocess_input
 from keras.models import load_model
 import tensorflow as tf
-#from tensorflow import keras
-import keras
 import cv2
-from flask import send_file
-from PIL import Image
 from keras_efficientnets import EfficientNetB5
 from tensorflow.keras.preprocessing import image
-import threading
 import multiprocessing as mp
-from multiprocessing import Pool,Process
-import ray
-#tf.enable_eager_execution()
 
 
 mp.set_start_method('fork')
@@ -30,9 +18,6 @@ H , W = IMG_SIZE*4,IMG_SIZE*4
 all_grads = []
 my_cam = []
 base_map = np.zeros((56,56),dtype=int)
-
-app = flask.Flask(__name__)
-
 
 graph2 = tf.Graph()
 with graph2.as_default():
@@ -193,16 +178,11 @@ def gradcam(org_img):
 
         return gauss_img,jetcam_max,jetcam_mean
 
-img = cv2.imread('./test_images/DR_4.JPG')
+img = cv2.imread('./test_images/DR_7.JPG')
 
 gradcam(img)
 
 
-
-# cv2.imshow("gradcam_max",cv2.imread('overlap_max.jpg'))
-# cv2.imshow("gradcam_mean",cv2.imread('overlap_mean.jpg'))
-# cv2.imshow("gauss",cv2.imread('gauss.jpg'))
-# cv2.waitKey(0)
 
 
 
